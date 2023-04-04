@@ -1,21 +1,15 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DriveTrain;
-
-import java.util.function.DoubleSupplier;
+import frc.robot.subsystems.Lift;
 
 
-public class TankDrive extends CommandBase {
-    private static DriveTrain driveTrain;
-    private static DoubleSupplier leftSpeed;
-    private static DoubleSupplier rightSpeed;
+public class liftDown extends CommandBase {
+    private static Lift lift;
 
-    public TankDrive(DriveTrain subsystem, DoubleSupplier leftSupplier, DoubleSupplier rightSupplier) {
-        driveTrain = subsystem;
-        leftSpeed = leftSupplier;
-        rightSpeed = rightSupplier;
-        addRequirements(driveTrain);
+    public liftDown(Lift subsystem) {
+        lift = subsystem;
+        addRequirements(lift);
     }
 
 
@@ -33,7 +27,7 @@ public class TankDrive extends CommandBase {
      */
     @Override
     public void execute() {
-        driveTrain.arcadeDrive(leftSpeed.getAsDouble(), rightSpeed.getAsDouble());
+        lift.down();
     }
 
 
@@ -67,6 +61,6 @@ public class TankDrive extends CommandBase {
      */
     @Override
     public void end(boolean interrupted) {
-        driveTrain.arcadeDrive(0, 0);
+        lift.stop();
     }
 }

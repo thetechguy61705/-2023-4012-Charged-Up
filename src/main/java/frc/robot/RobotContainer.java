@@ -8,10 +8,14 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.TankDrive;
+import frc.robot.commands.liftDown;
+import frc.robot.commands.liftUp;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Lift;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.DriveTrain;
 
@@ -25,6 +29,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private DriveTrain driveTrain = new DriveTrain();
+  private Lift lift = new Lift();
 
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -58,6 +63,12 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    
+    JoystickButton liftDowButton = new JoystickButton(stickL, 3);
+    JoystickButton liftUpButton = new JoystickButton(stickL, 2);
+
+    liftUpButton.whileHeld(new liftUp(lift));
+    liftDowButton.whileHeld(new liftDown(lift));
   }
   private void configDefaultCommands() {
     driveTrain.setDefaultCommand(new TankDrive(driveTrain,
