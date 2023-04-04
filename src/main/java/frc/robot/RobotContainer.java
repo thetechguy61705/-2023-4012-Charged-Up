@@ -8,7 +8,9 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.TankDrive;
+import frc.robot.commands.liftBottom;
 import frc.robot.commands.liftDown;
+import frc.robot.commands.liftTop;
 import frc.robot.commands.liftUp;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Lift;
@@ -63,12 +65,18 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-    
+  
     JoystickButton liftDowButton = new JoystickButton(stickL, 3);
     JoystickButton liftUpButton = new JoystickButton(stickL, 2);
 
-    liftUpButton.whileHeld(new liftUp(lift));
-    liftDowButton.whileHeld(new liftDown(lift));
+    JoystickButton manliftDowButton = new JoystickButton(stickR, 3);
+    JoystickButton manliftUpButton = new JoystickButton(stickR, 2);
+
+    liftUpButton.whenPressed(new liftTop(lift));
+    liftDowButton.whenPressed(new liftBottom(lift));
+
+    manliftUpButton.whileHeld(new liftUp(lift));
+    manliftDowButton.whileHeld(new liftDown(lift));
   }
   private void configDefaultCommands() {
     driveTrain.setDefaultCommand(new TankDrive(driveTrain,
